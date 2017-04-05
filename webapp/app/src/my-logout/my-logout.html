@@ -32,14 +32,14 @@
         properties: {
           rol: {
             type: String,
-            value: "undefined",
+            value: "docent",
             notify: true,
           },
         },
 
         _logout_clicked: function() {
-          console.log("_logout_clicked");
-          this.rol = "undefined";
+          console.log("_logout_clicked " + this.rol);
+          this.rol = "uitgelogd";
           this._go_home();
          },
         

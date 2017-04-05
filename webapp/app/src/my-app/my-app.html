@@ -142,7 +142,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 
           <!-- altijd beschikbaar--------------------------------------------------------- -->
  
-          <a name="logout" href$="[[_c_baseURL]]logout"  verborgen$="[[_are_strings_equal(_rol, 'undefined')]]">
+          <a name="logout" href$="[[_c_baseURL]]logout"  verborgen$="[[_are_strings_equal(rol, 'undefined')]]">
             <iron-icon icon="account-box"></iron-icon>
             <span>Uitloggen</span>
           </a>
@@ -182,6 +182,10 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
         <!-- sections voor iedereen ---------------------------------------------------------------- -->
         <!-- element$="none" of weglaten van element$ geeft beide aan dat er geen polymerElement gebruikt zal gaan worden -->
         <section name="inloggen" title="INLOGGEN" element$="none"> 
+		
+		    <paper-toast id="toast_reeds_aangelogd" duration="0" text="U bent al ingelogd!">
+				<paper-button on-click="_toast_clicked" class="toast-button">Sluiten</paper-button>
+			</paper-toast>
 			<paper-material elevation="1">
 				<p>Log hier in!</p>
 				<div class="usericondiv">
@@ -208,32 +212,6 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 			</paper-material>
         </section>
 
-        <section name="systeem_instellen_systeemdatum" 
-                 title="INSTELLEN SYSTEEMDATUM"
-              	 element$="my-systeemdatum">
-            <paper-material elevation="1">
-              <!--
-                c_visible="true" als deze section geselecteerd is.
-                LET OP: boolean values moeten als string doorgegeven worden,
-                        vandaar de quotes rondom de function aanroep.
-                        De aanwezige literal waarde wordt met enkele quotes doorgegeven
-              -->
-              <my-systeemdatum
-                systeemdatumlokaal="{{_systeemdatumlokaal}}"
-                systeemdatumstandaard="{{_systeemdatumstandaard}}"
-                c_visible="[[_are_strings_equal(_ar_page, 'systeem_instellen_systeemdatum')]]">
-              </my-systeemdatum>
-            </paper-material>
-          </section>
-
-          <section name="login" 
-              	   title="LOGIN"
-              	   element$="my-login">
-            <paper-material elevation="1" style="max-width: 380px;">'
-              <my-login username="{{_username}}" rol="{{_rol}}" ></my-login>
-            </paper-material>
-          </section>
-
           <section name="logout" 
                    title="UITLOGGEN"
                    element="my-logout">
@@ -242,45 +220,8 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
             </paper-material>
           </section>
 
-<!-- sections voor docent -->
- 
- <!-- sections voor student -->
-          <section  name="student_medestudenten" 
-                    title="OVERZICHT MEDESTUDENTEN"
-                    element$="my-medestudenten">
-            <paper-material elevation="1">
-              <!--
-                  c_visible="true" als deze section geselecteerd is.
-                  LET OP: boolean values moeten als string doorgegeven worden,
-                          vandaar de quotes rondom de function aanroep.
-                          De aanwezige literal waarde wordt met enkele quotes doorgegeven
-              -->
-              <my-medestudenten
-                c_visible="[[_are_strings_equal(_ar_page, 'student_medestudenten')]]"
-                c_rol="[[_rol]]"
-                c_username="[[_username]]">
-              </my-medestudenten>
-            </paper-material>
-          </section>
 
-          <section name="student_details" title="STUDENT DETAILS">
-            <paper-material elevation="1">
-              <h2 class="page-title">Student: [[_ar_subsubroute_data.subsubpage]]</h2>
-              <div>This is [[_ar_subsubroute_data.subsubpage]]'s section</div>
-            </paper-material>
-          </section>
-
-          <section  name="view404" 
-                    title="PAGE NOT FOUND" 
-                    element$="my-view404">
-            <paper-material elevation="1">
-              <my-view404></my-view404>
-            </paper-material>
-          </section>
-        </iron-pages>
-    </app-drawer-layout>
-
-   </template>
+</template>
   <script>
     (function() {
       'use strict';
@@ -294,13 +235,22 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
         is: 'my-app',
 
         properties: {
+		  _password: {
+            type: String,
+            value: "geheim",                           /* om snel te testen zonder steeds input te doen */
+          },
+          rol: {
+            type: String,
+            notify: true,
+          },
+          username: {
+            type: String,
+            value: "john.smeets@hu.nl",              /* om snel te testen zonder steeds input te doen */
+            notify: true
+          },
           _c_baseURL: {
             type: String,
             value: "/#/",                          
-          },
-          _rol: {
-            type: String,
-            value: "undefined",  		//zodat login zichtbaar wordt                        
           },
           _ar_page: {
             type: String,
@@ -341,7 +291,68 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
             type: String,
           },
         },  //end of properties
-         
+		  _checkForEnter: function (e) {
+          if (e.currentTarget.id == "email_element") {
+            if (e.keyCode === 13) {
+              var lWachtwoordElement =
+                this.$.wachtwoord_element;          /* haal uit de $ collectie van alle polymer element
+                                                       het element met id = "wachtwoord_element" */
+            lWachtwoordElement.focus();             // plaats de cursor er in
+            }
+          } else if (e.keyCode === 13) {
+            var lLoginButton =
+              this.$.login_button_element;          /* haal uit de $ collectie van alle polymer element
+                                                       het element met id = "login_button_element" */
+            this.$.login_button_element.click();    // forceer een klik
+          }
+        },
+
+        _go_home: function() {
+          var lApp = document.querySelector('my-app');  //het polymer element <my-app>
+          var lAppRouter = lApp.$.approuter;            // het html-element <app-route> met id=approuter
+          lAppRouter.data={page: "logout"};                   // vul het data attribute met de homepage url
+		  console.log("rol= "+this.rol);
+                                                        // door de two way binding in <app-route> en <app-location>
+                                                        // zal ook de url echt wijzigen
+         },
+
+         _ophalen_login_request_handler: function() {
+          console.log("_ophalen_login_request_handler username=" + this.username + this.rol);
+          if (this.rol == "undefined") {
+            this.$.ajax_login.contentType="application/json";
+            this.$.ajax_login.body={
+              "username":this.username,
+              "password":this._password
+            };
+            this.$.ajax_login.generateRequest();
+          } else {
+            var lToast = this.$.toast_reeds_aangelogd;     // meldt reeds aangelogd
+            lToast.open();                                  /* het sluiten van deze error verwijst  */
+                                                            /* terug naar home page */
+          }
+        },
+
+        _ophalen_login_response_handler: function(request) {
+          console.log("_ophalen_login_response_handler username="+this.username +  this.rol);
+          /* this._password = ""; /* om snel te kunnen testen is dit verwijderd */
+          if (this.rol == "undefined") {                    //als aanloggen mislukt
+            this.$.email_element.invalid = true;                // markeer email-element
+            this.$.wachtwoord_element.invalid = true;           // markeer wachtwoord-element
+
+          } else {                                            // als aanloggen ok
+            this.$.email_element.invalid = false;               // verwijder fout markering
+            this.$.wachtwoord_element.invalid = false;          // verwijder fout markering
+            this._go_home();                                    // ga naar de home page.
+          }
+        },
+
+        _toast_clicked: function(e) {
+          var lToast = e.path[1];       //path[0] is de button. path[1] is de owner etc.
+          lToast.toggle();              //sluit de foutmelding
+          this._go_home();              // en ga verder op de home page
+        },        
+
+		
         observers: [
           '_ar_route_data_page_changed(_ar_route_data.page)',
           '_ar_subroute_data_subpage_changed(_ar_subroute_data.subpage)',
