@@ -1,10 +1,13 @@
 //checked
 package model.persoon;
 
+import model.presentie.Afwezigheid;
+
 public class Student extends Persoon {
 
 	private int studentNummer;
 	private String groepId;
+	private Afwezigheid afwezigheden;
 
 	public Student(
 		String pVoornaam, 

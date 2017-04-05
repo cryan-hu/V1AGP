@@ -1,4 +1,4 @@
-package model.vakGegevems;
+package model.vakGegevens;
 
 import java.time.LocalDate;
 
@@ -40,7 +40,40 @@ public class Les {
 		return hetVak;
 	}
 	
-	public void setVak(Vak){
-		
+	public void setVak(Vak hetVak){
+		this.hetVak = hetVak;
 	}
+	
+	public Klas getKlas(){
+		return deKlas;
+	}
+	
+	public void setKlas(Klas deKlas){
+		this.deKlas = deKlas;
+	}
+	
+	public LocalDate getStartDateTime(){
+		return startDate;
+	}
+	
+	public void setStartDateTime(LocalDate startDate){
+		this.startDate = startDate;
+	}
+	
+	public LocalDate getEindDateTime(){
+		return eindDate;
+	}
+	
+	public void setEindDateTime(LocalDate eindDate){
+		this.eindDate = eindDate;
+	}
+	
+	public String getLocatie(){
+		return locatie;
+	}
+	
+	public void setLocatie(String locatie){
+		this.locatie = locatie;
+	}
+	
 }

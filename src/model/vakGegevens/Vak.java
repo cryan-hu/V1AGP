@@ -1,4 +1,4 @@
-package model.vakGegevems;
+package model.vakGegevens;
 
 public class Vak {
 	private String vakCode; 

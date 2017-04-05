@@ -1,6 +1,7 @@
 package model.presentie;
 
 import model.persoon.Student;
+import model.vakGegevens.Les;
 
 public class Presentie {
 	private boolean isAanwezig;
@@ -20,34 +21,32 @@ public class Presentie {
 		return status;
 	}
 	
-	public void setOpnameDoorDocent(boolean){
-		boolean status = false;
-		return status;
+	public void setOpnameDoorDocent(boolean opnameDoorDocent){
+		this.opnameDoorDocent = opnameDoorDocent;
 	}
 	
 	public Les getLes(){
 		return les;
 	}
 	
-	public void setLes(Les){
+	public void setLes(Les les){
+		this.les = les;
 		
 	}
 	
-	public getStudent(){
+	public Student getStudent(){
 		return student;
 	}
 	
-	public void setStudent(Student){
-		
+	public void setStudent(Student student){
+		this.student = student;
 	}
 	
 	public boolean isAanwezig(){
-		boolean status = false;
-		return status;
+		return isAanwezig;
 	}
 	
-	public setAanwezig(boolean){
-		
+	public void setAanwezig(boolean isAanwezig){
+		this.isAanwezig = isAanwezig;
 	}
-
 }
