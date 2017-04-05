@@ -5,7 +5,6 @@ import java.util.ArrayList;
 import model.klas.Klas;
 import model.persoon.Docent;
 import model.persoon.Student;
-import model.presentie.Presentie;
 
 import java.io.BufferedReader;
 import java.io.FileNotFoundException;
@@ -21,7 +20,6 @@ public class PrIS {
 	private ArrayList<Docent> deDocenten;
 	private ArrayList<Student> deStudenten;
 	private ArrayList<Klas> deKlassen;
-	private ArrayList<Presentie> dePresenties;
 	
 	/**
 	 * De constructor maakt een set met standaard-data aan. Deze data
