@@ -127,7 +127,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
  					  vanuit de URL via een observer functie
  					  er is dus een sterke gelijkenis tussen _ar_page en de URL
  					  met name URL "xx/yy"  wordt _ar_page "xx_yy" maar ook
- 						       URL "/"      wordt _ar_page "home" en
+ 						       URL "/"      wordt _ar_page "inloggen" en
  						       overige URL  wordt _ar_page "view404". 
  		-->
  		<!-- blue (empty) toolbar in menu -->
@@ -181,11 +181,31 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
  
         <!-- sections voor iedereen ---------------------------------------------------------------- -->
         <!-- element$="none" of weglaten van element$ geeft beide aan dat er geen polymerElement gebruikt zal gaan worden -->
-        <section name="home" title="HOME" element$="none"> 
-          <paper-material elevation="1">
-              <p>Demo app gebaseerd op Polymer.</p>
-              <p>Deze app past nadat je bent ingeloggen het menu aan, aan de rol die gekoppeld is aan de ingeloggede user.</p>
-          </paper-material>
+        <section name="inloggen" title="INLOGGEN" element$="none"> 
+			<paper-material elevation="1">
+				<p>Log hier in!</p>
+				<div class="usericondiv">
+					<iron-icon icon="icons:perm-identity" class="my-icon"></iron-icon>
+				</div>
+				<div class="my-input">
+				<paper-input id="email_element" on-keydown="_checkForEnter" label="gebruikersnaam" value="{{username}}"></paper-input>
+				<paper-input id="wachtwoord_element" on-keydown="_checkForEnter" label="wachtwoord" type="password" value="{{_password}}"></paper-input>
+				</div>
+				<paper-button
+					id="login_button_element"
+					class="my-button"
+					on-click="_ophalen_login_request_handler"
+					raised>
+					Inloggen
+				</paper-button>
+				<iron-ajax
+					id="ajax_login"
+					method="POST"
+					url="/login"
+					handle-as="json"
+					on-response="_ophalen_login_response_handler">
+				</iron-ajax>
+			</paper-material>
         </section>
 
         <section name="systeem_instellen_systeemdatum" 
@@ -332,7 +352,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
             this.$.drawer.close();
           }
           if ((pNewPage == "") || (pNewPage == undefined)){
-              this._ar_page = "home";
+              this._ar_page = "inloggen";
             } else {
               this._ar_page = pNewPage;         
             } 
