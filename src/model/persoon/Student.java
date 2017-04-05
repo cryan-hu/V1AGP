@@ -1,13 +1,15 @@
 //checked
 package model.persoon;
 
+import java.util.ArrayList;
+
 import model.presentie.Afwezigheid;
 
 public class Student extends Persoon {
 
 	private int studentNummer;
 	private String groepId;
-	private Afwezigheid afwezigheden;
+	private ArrayList<Afwezigheid> afwezigheden;
 
 	public Student(
 		String pVoornaam, 
@@ -26,8 +28,16 @@ public class Student extends Persoon {
 		this.setGroepId("");
 	}
 
+	public Afwezigheid getActieveZiektemelding(){
+		return null; // returnt actieve melding die open staat.
+	}
+	
+	public ArrayList<Afwezigheid> getAfwezigheden(){
+		return afwezigheden;
+	}
+	
 
- public String getGroepId() {
+	public String getGroepId() {
     return this.groepId;	
   }
  
