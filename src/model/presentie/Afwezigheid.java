@@ -42,7 +42,7 @@ public class Afwezigheid {
 
 	public boolean isZiektemelding(){
 			if (beginDatum!=null && eindDatum!=null){
-				return true
+				return true;
 			} else{
 			return false; // kijken of er begin en eind datum zijn ingesteld zoja dan returnt True anders false;
 			}
