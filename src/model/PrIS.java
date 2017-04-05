@@ -5,6 +5,10 @@ import java.util.ArrayList;
 import model.klas.Klas;
 import model.persoon.Docent;
 import model.persoon.Student;
+import model.presentie.Presentie;
+import model.vakGegevems.Les;
+import model.vakGegevems.Vak;
+
 
 import java.io.BufferedReader;
 import java.io.FileNotFoundException;
@@ -20,6 +24,10 @@ public class PrIS {
 	private ArrayList<Docent> deDocenten;
 	private ArrayList<Student> deStudenten;
 	private ArrayList<Klas> deKlassen;
+	private ArrayList<Presentie> dePresenties;
+	private ArrayList<Vak> deVakken;
+	private ArrayList<Les> deLessen;
+
 	
 	/**
 	 * De constructor maakt een set met standaard-data aan. Deze data
@@ -97,6 +105,15 @@ public class PrIS {
 		return lString;
 	}
 
+	private Vak getVak(String vakCode){
+		for (Vak lVak : deVakken) {
+			if (lVak.equals(vakCode)){
+				return lVak;
+		}
+		}
+		return null;
+	}
+	
 	public Docent getDocent(String gebruikersnaam) {
 		Docent resultaat = null;
 		
@@ -110,6 +127,10 @@ public class PrIS {
 		return resultaat;
 	}
 	
+	public ArrayList<Vak> getDocentVakken(Docent docent){
+		return null;
+	}
+	
 	public Klas getKlasVanStudent(Student pStudent) {
 	  //used
 		for (Klas lKlas : deKlassen) {
@@ -117,6 +138,28 @@ public class PrIS {
 				return (lKlas);
 			}
 		}
+		return null;
+	}
+	
+	public Presentie getPresentie(Les les, Student student){
+		return null;
+	}
+
+	
+	public int getPresentieType(Les Student){
+		for (Vak lVak : deVakken) {
+			if (lVak.equals(vakCode)){
+				return lVak;
+		}
+		}
+		return null;
+	}
+	
+	public ArrayList<Presentie> getPresentie(){
+		return dePresenties;
+	}
+		
+	public ArrayList<Presentie> getPresentieStudent(String Student){
 		return null;
 	}
 	
@@ -148,6 +191,16 @@ public class PrIS {
 		return lGevondenStudent;
 	}
 
+	public boolean inPresentie(Student student, Les les){
+		boolean status = false;
+		for (Presentie p : dePresenties){
+			if (p.getStudent().equals(student)&& p.getLes().equals(les)){
+				status = true;
+			}
+		}
+		return status;
+	}
+	
 	public String login(String gebruikersnaam, String wachtwoord) {
 		for (Docent d : deDocenten) {
 			if (d.getGebruikersnaam().equals(gebruikersnaam)) {
@@ -167,6 +220,46 @@ public class PrIS {
 		
 		return "undefined";
 	}
+	
+	public void nieuwePresentie(boolean isAanwezig, Les les, boolean opnameDoorDocent, Student student){
+		return null;
+	}
+	
+	public void verwijderPresentie(Student student, Les les){
+		return null;
+	}
+	
+	private void vulVakken(ArrayList<Vak> pVakken){
+		String csvFile = "././CSV/vakken.csv";
+		BufferedReader br = null;
+		String line = "";
+		String csvSplitBy = ",";
+		
+		try{
+			br = new BufferedReader(new FileReader(csvFile));
+			while ((line = br.readLine()) != null){
+				
+				String[] element = line.split(csvSplitBy);
+				String vakcode = element[0];
+				String vaknaam = element[1];
+				pVakken.add(new Vak(vakcode, vaknaam));
+			}
+		} catch (FileNotFoundException e) {
+			e.printStackTrace();
+		} catch (IOException e) {
+			e.printStackTrace();
+		} finally {
+			if (br != null) {
+				try {
+					br.close();
+				} catch (IOException e) {
+					e.printStackTrace();
+				}
+			}
+		}
+	}
+		
+	
 	private void vulDocenten(ArrayList<Docent> pDocenten) {
 		String csvFile = "././CSV/docenten.csv";
 		BufferedReader br = null;
