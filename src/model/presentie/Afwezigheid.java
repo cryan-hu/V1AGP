@@ -26,7 +26,7 @@ public class Afwezigheid {
 	}
 
 	public String getVolledigeAfwezigheid() {
-		String s= "de Volledige afwezigheid is van: "+beginDatum+" tot "+eindDatum+"."; 
+		String s= "De Volledige afwezigheid is van: "+beginDatum+" tot "+eindDatum+"."; 
 		return s; // beginDatum + eindDatum;
 	}
 
@@ -42,15 +42,30 @@ public class Afwezigheid {
 	}
 
 	public boolean isZiektemelding(){
-			if (beginDatum!=null && eindDatum!=null){
+		
+		if(this.type.contains("ziek")){
+			return true;
+		}else{
+			return false;
+		}
+		
+		
+		
+		
+			/*if (beginDatum!=null && eindDatum!=null){
 				return true;
 			} else{
 			return false; // kijken of er begin en eind datum zijn ingesteld zoja dan returnt True anders false;
 			}
-		}
+		}*/
+	}
 
 	private void setBeginDatum(Calendar beginDatum) {
 		this.beginDatum = beginDatum;
+	}
+	
+	public void setEindDatum(Calendar eindDatum){
+		this.eindDatum = eindDatum;
 	}
 
 	private void setType(String type) {

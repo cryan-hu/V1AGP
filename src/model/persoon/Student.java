@@ -2,13 +2,13 @@
 package model.persoon;
 
 import java.util.ArrayList;
+import java.util.Calendar;
 
 import model.presentie.Afwezigheid;
 
 public class Student extends Persoon {
 
 	private int studentNummer;
-	private String groepId;
 	private ArrayList<Afwezigheid> afwezigheden;
 
 	public Student(
@@ -17,7 +17,7 @@ public class Student extends Persoon {
 		String pAchternaam, 
 		String pWachtwoord, 
 		String pGebruikersnaam,
-		int pStudentNummer) {
+		int pStudentNummer){
 		super(
 			pVoornaam, 
 			pTussenvoegsel, 
@@ -25,26 +25,23 @@ public class Student extends Persoon {
 			pWachtwoord, 
 			pGebruikersnaam);
 		this.setStudentNummer(pStudentNummer);
-		this.setGroepId("");
+		this.afwezigheden = new ArrayList<Afwezigheid>();
 	}
 
 	public Afwezigheid getActieveZiektemelding(){
-		return null; // returnt actieve melding die open staat.
+		Calendar nowDate = Calendar.getInstance(); 
+		for (Afwezigheid a: afwezigheden){
+			if(nowDate.before(a.getEindDatum())){
+				return a;
+			}
+		} // returnt actieve melding die open staat.
+		return null;
 	}
 	
 	public ArrayList<Afwezigheid> getAfwezigheden(){
 		return afwezigheden;
 	}
 	
-
-	public String getGroepId() {
-    return this.groepId;	
-  }
- 
-  public void setGroepId(String pGroepId) {
-    this.groepId= pGroepId;	
-  }
- 
 	public int getStudentNummer() {
 		return this.studentNummer;
 	}
@@ -52,5 +49,14 @@ public class Student extends Persoon {
 	private void setStudentNummer(int pStudentNummer) {
 		this.studentNummer = pStudentNummer;
 	}
+	
+	public void voegAfwezigheidToe(Afwezigheid afwezigheid){
+		afwezigheden.add(afwezigheid);
+	}
+	
+	
+	
+	
+	
 	
 }
