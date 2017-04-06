@@ -1,6 +1,5 @@
 package model.presentie;
 
-import java.time.Calendar;
 import java.util.Calendar;
 
 public class Afwezigheid {
@@ -32,7 +31,7 @@ public class Afwezigheid {
 	}
 
 	public boolean isActieveZiektemelding() {
-		Calendar date = Calendar..now(); 
+		Calendar date = Calendar.now(); 
 		if (date.isAfter(beginDatum) && date.isBefore(eindDatum)) { // begin<datum<eind
 			return true;
 		} else {
