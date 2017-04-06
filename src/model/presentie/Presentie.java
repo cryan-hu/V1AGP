@@ -55,6 +55,7 @@ public class Presentie {
 	
 	public boolean equals(Object obj){
 		boolean gelijk = false;
+		
 		if (obj instanceof Presentie){
 			Presentie anderePresentie = (Presentie) obj;
 			if (anderePresentie.getStudent()){

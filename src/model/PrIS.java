@@ -6,8 +6,8 @@ import model.klas.Klas;
 import model.persoon.Docent;
 import model.persoon.Student;
 import model.presentie.Presentie;
-import model.vakGegevems.Les;
-import model.vakGegevems.Vak;
+import model.vakGegevens.Les;
+import model.vakGegevens.Vak;
 
 
 import java.io.BufferedReader;
@@ -146,13 +146,8 @@ public class PrIS {
 	}
 
 	
-	public int getPresentieType(Les Student){
-		for (Vak lVak : deVakken) {
-			if (lVak.equals(vakCode)){
-				return lVak;
-		}
-		}
-		return null;
+	public int getPresentieType(Les les, Student student){
+		return (Integer) null;
 	}
 	
 	public ArrayList<Presentie> getPresentie(){
@@ -222,12 +217,7 @@ public class PrIS {
 	}
 	
 	public void nieuwePresentie(boolean isAanwezig, Les les, boolean opnameDoorDocent, Student student){
-		return null;
-	}
-	
-	public void verwijderPresentie(Student student, Les les){
-		return null;
-	}
+		}
 	
 	private void vulVakken(ArrayList<Vak> pVakken){
 		String csvFile = "././CSV/vakken.csv";

@@ -1,23 +1,24 @@
 package model.presentie;
 
-import java.time.LocalDate;
+import java.time.Calendar;
+import java.util.Calendar;
 
 public class Afwezigheid {
-	private LocalDate beginDatum;
-	private LocalDate eindDatum;
+	private Calendar beginDatum;
+	private Calendar eindDatum;
 	private String type;
 
-	public Afwezigheid(String type, LocalDate beginDatum, LocalDate eindDatum) {
+	public Afwezigheid(String type, Calendar beginDatum, Calendar eindDatum) {
 		this.type = type;
 		this.beginDatum = beginDatum;
 		this.eindDatum = eindDatum;
 	}
 
-	public LocalDate getBeginDatum() {
+	public Calendar getBeginDatum() {
 		return beginDatum;
 	}
 
-	public LocalDate getEindDatum() {
+	public Calendar getEindDatum() {
 		return eindDatum;
 	}
 
@@ -31,7 +32,7 @@ public class Afwezigheid {
 	}
 
 	public boolean isActieveZiektemelding() {
-		LocalDate date = LocalDate.now(); 
+		Calendar date = Calendar..now(); 
 		if (date.isAfter(beginDatum) && date.isBefore(eindDatum)) { // begin<datum<eind
 			return true;
 		} else {
@@ -49,7 +50,7 @@ public class Afwezigheid {
 			}
 		}
 
-	private void setBeginDatum(LocalDate beginDatum) {
+	private void setBeginDatum(Calendar beginDatum) {
 		this.beginDatum = beginDatum;
 	}
 
