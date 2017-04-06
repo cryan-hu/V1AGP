@@ -17,6 +17,8 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 -->
 
 <link rel="import" href="elements.html"> <!-- gewijzigd tov PSK -->
+<link rel="import" href="../my-hoofdscherm/my-hoofdscherm.html"> <!-- gewijzigd tov PSK -->
+<link rel="import" href="../my-logout/my-logout.html"> <!-- gewijzigd tov PSK -->
 
 <dom-module id="my-app">
   <template>
@@ -135,7 +137,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
           <img id="toolbarlogo" src="../../images/hu_logo.png" alt="HU" />
         </app-toolbar>
         <iron-selector selected="[[_ar_page]]" attr-for-selected="name" class="drawer-list" role="navigation">
-          <a name="Inloggen" href$="[[_c_baseURL]]">
+          <a name="inlog" href$="[[_c_baseURL]]" verborgen$="[[_are_strings_equal(rol, 'docent')]]">
             <iron-icon icon="home"></iron-icon>
             <span>Inloggen</span>
           </a>
@@ -146,14 +148,12 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
             <iron-icon icon="account-box"></iron-icon>
             <span>Uitloggen</span>
           </a>
+		  <a name="hoofdscherm" href$="[[_c_baseURL]]hoofdscherm"  verborgen$="[[_are_strings_equal(rol, 'undefined')]]">
+            <iron-icon icon="account-box"></iron-icon>
+            <span>Hoofdscherm</span>
+          </a>
 
           <!-- beschikbaar voor docent---------------------------------------------------- -->
-
-          <!-- beschikbaar voor student--------------------------------------------------- -->
-          <a name="student_medestudenten" href$="[[_c_baseURL]]student/medestudenten"  verborgen$="[[!_are_strings_equal(_rol, 'student')]]">
-            <iron-icon icon="social:group"></iron-icon>
-            <span>Toon medestudenten</span>
-          </a>
 
         </iron-selector>
       </app-drawer>
@@ -162,7 +162,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
       <!-- blue title toolbar in menu -->
       <app-toolbar class="toolbar">
         <paper-icon-button  icon="menu" drawer-toggle></paper-icon-button>
-        <span>[[_ar_selected_object.title]] ([[_systeemdatumlokaal]])</span>
+        <span>[[_ar_selected_object.title]] ([[_systeemdatumlokaal]]) [[rol]]</span>
       </app-toolbar>
  
       <iron-pages 
@@ -216,7 +216,15 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
                    title="UITLOGGEN"
                    element="my-logout">
             <paper-material elevation="1">
-              <my-logout rol="{{_rol}}"></my-logout>
+              <my-logout rol="{{rol}}"></my-logout>
+            </paper-material>
+          </section>
+		  
+		  <section name="hoofdscherm" 
+                   title="HOOFDSCHERM"
+                   element="my-hoofdscherm">
+            <paper-material elevation="2">
+              <my-hoofdscherm rol="{{rol}}"></my-hoofdscherm>
             </paper-material>
           </section>
 
@@ -310,7 +318,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
         _go_home: function() {
           var lApp = document.querySelector('my-app');  //het polymer element <my-app>
           var lAppRouter = lApp.$.approuter;            // het html-element <app-route> met id=approuter
-          lAppRouter.data={page: "logout"};                   // vul het data attribute met de homepage url
+          lAppRouter.data={page: "hoofdscherm"};                   // vul het data attribute met de homepage url
 		  console.log("rol= "+this.rol);
                                                         // door de two way binding in <app-route> en <app-location>
                                                         // zal ook de url echt wijzigen
@@ -334,6 +342,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 
         _ophalen_login_response_handler: function(request) {
           console.log("_ophalen_login_response_handler username="+this.username +  this.rol);
+		  this.rol = request.detail.response.rol;
           /* this._password = ""; /* om snel te kunnen testen is dit verwijderd */
           if (this.rol == "undefined") {                    //als aanloggen mislukt
             this.$.email_element.invalid = true;                // markeer email-element
@@ -417,6 +426,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 		  */
 		  /* gebruikt het Javascript date object om op basis van een standaarddatumstring
 		     een object te maken en via dit een lokaledatumstring te maken */
+		  this.rol = "undefined";
 		  var eenDatumObject             = new Date(); // is vandaag
 		  this._systeemdatumstandaard    = this.date_to_standaard_string(eenDatumObject);
 		  this._systeemdatumlokaal       = eenDatumObject.toLocaleDateString();

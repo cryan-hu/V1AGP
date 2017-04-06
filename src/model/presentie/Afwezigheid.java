@@ -31,7 +31,8 @@ public class Afwezigheid {
 	}
 
 	public boolean isActieveZiektemelding() {
-		if (beginDatum.isBefore(eindDatum)) {
+		LocalDate date = LocalDate.now(); 
+		if (date.isAfter(beginDatum) && date.isBefore(eindDatum)) { // begin<datum<eind
 			return true;
 		} else {
 			return false; // hier moet met huidige datum gekeken worden of dat wel in

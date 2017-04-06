@@ -1,4 +1,4 @@
-<dom-module id="my-logout">
+<dom-module id="my-hoofdscherm">
   <template>
     <style>
       :host {
@@ -10,7 +10,7 @@
       }
     </style>
 
-    <paper-button raised on-click="_logout_clicked">Klik hier als je zeker weet dat je echt wilt uitloggen</paper-button>
+    <paper-button raised>Je moeder is fucking lelijk</paper-button>
 
   </template>
 
@@ -23,7 +23,7 @@
          xxxx  public               : two way external databinding {{xxxx}} - notify nodig
       */
       Polymer({
-        is: 'my-logout',
+        is: 'my-hoofdscherm',
 
         properties: {
           rol: {
@@ -33,12 +33,7 @@
         },		
 		
 		
-        _logout_clicked: function() {
-          console.log("_logout_clicked pizza " + this.rol);
-          this.rol = "undefined";
-          this._go_home();
-         },
-        
+      
         _go_home: function() {
           var lApp = document.querySelector('my-app');  //het polymer element <my-app>
           var lAppRouter = lApp.$.approuter;            // het html-element <app-route> met id=approuter
