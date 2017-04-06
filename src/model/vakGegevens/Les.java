@@ -16,7 +16,13 @@ public class Les {
 	private Klas deKlas; 
 	private Docent deDocent;
 	
-	public Les(String id,Calendar startDate, Calendar eindDate, String locatie, Vak hetVak, Klas deKlas, Docent deDocent){
+	public Les(String id,
+			Calendar startDate, 
+			Calendar eindDate, 
+			String locatie, 
+			Vak hetVak, 
+			Klas deKlas, 
+			Docent deDocent){
 		this.id = id;
 		this.startDate = startDate;
 		this.eindDate = eindDate; 

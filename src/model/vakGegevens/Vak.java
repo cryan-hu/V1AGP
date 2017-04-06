@@ -24,5 +24,17 @@ public class Vak {
 	public void setNaam(String naam){
 		this.naam = naam;
 	}
-
+	
+	public boolean equals(Object andereObject){
+		boolean gelijkObj = false;
+		
+		if(andereObject instanceof Vak){
+			Vak andereVak = (Vak) andereObject;
+			if(this.naam.equals(andereVak.naam)&&
+					this.vakCode.equals(andereVak.vakCode)){
+				gelijkObj = true;
+			}
+		}
+	return gelijkObj;
+	}
 }
