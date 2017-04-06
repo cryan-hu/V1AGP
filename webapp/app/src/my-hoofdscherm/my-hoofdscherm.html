@@ -8,9 +8,43 @@
       span {
         @apply(--paper-font-body1);
       }
+	  paper-button.optie{
+		width: 220px;
+	  }
+	  table{
+	    margin-left: auto;
+		margin-right: auto;
+	  }
     </style>
 
-    <paper-button raised>Je moeder is fucking lelijk</paper-button>
+    <!--<paper-button id="inzien" raised>Mijn presentie inzien</paper-button>&emsp;-->
+	<span> Hier komt het rooster</span>
+	<iron-ajax url="data.json" last-response="{{data}}" auto></iron-ajax>
+	<iron-data-table items="[[data]]">
+		<data-table-column name="Maandag">
+			<template>[[item.dag.maandag]]</template>
+		</data-table-column>
+		<data-table-column name="Dinsdag">
+			<template>[[item.dag.dinsdag]]</template>
+		</data-table-column>
+				<data-table-column name="Woensdag">
+			<template>[[item.dag.woensdag]]</template>
+		</data-table-column>
+				<data-table-column name="Donderdag">
+			<template>[[item.dag.donderdag]]</template>
+		</data-table-column>
+				<data-table-column name="Vrijdag">
+			<template>[[item.dag.vrijdag]]</template>
+		</data-table-column>
+	</iron-data-table>
+	<table>
+	<tr>
+	<td><paper-button id="ziekMelden" class="optie" raised>Ziek melden</paper-button></td>
+	<td><paper-button id="afwezigMelden" class="optie" raised>Afwezig melden</paper-button></td></tr>
+	<tr><td><paper-button id="beterMelden" class="optie" raised>Beter melden</paper-button></td>
+	<td><paper-button id="afwezigheidVerwijderen" class="optie" raised>Afwezigheid verwijderen</paper-button></td></tr>
+	</table>
+	
 
   </template>
 
