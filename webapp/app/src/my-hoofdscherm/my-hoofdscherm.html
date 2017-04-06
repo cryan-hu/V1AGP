@@ -1,3 +1,4 @@
+
 <dom-module id="my-hoofdscherm">
   <template>
     <style>
@@ -11,33 +12,107 @@
 	  paper-button.optie{
 		width: 220px;
 	  }
-	  table{
-	    margin-left: auto;
+	  table#opties{
+	  margin-left: auto;
 		margin-right: auto;
 	  }
-    </style>
+    iron-data-table{
+      width: 19%;
+      display: inline-block;
+      height: 700px;
+    }
+    data-table-row[selected]{
+      border: 1px solid gray;
+      border-right: 1px solid gray;
+      background-color: #F5F6CE;
+    }
+    data-table-row[header]{
+      border: 0px solid gray;
+      height: 50px;
+    }
+    data-table-row{
+      border: 1px solid gray;
+    }
+    data-table-cell{
+      width: 100%;
+      height: 90px;
+      padding: 7px;
+    }
+    .tijden{
+      font-weight: bold;
+    }
+    span{
+      display: block;
+      text-align: center;
+    }
 
-    <!--<paper-button id="inzien" raised>Mijn presentie inzien</paper-button>&emsp;-->
-	<span> Hier komt het rooster</span>
-	<iron-ajax url="data.json" last-response="{{data}}" auto></iron-ajax>
-	<iron-data-table items="[[data]]">
-		<data-table-column name="Maandag">
-			<template>[[item.dag.maandag]]</template>
-		</data-table-column>
-		<data-table-column name="Dinsdag">
-			<template>[[item.dag.dinsdag]]</template>
-		</data-table-column>
-				<data-table-column name="Woensdag">
-			<template>[[item.dag.woensdag]]</template>
-		</data-table-column>
-				<data-table-column name="Donderdag">
-			<template>[[item.dag.donderdag]]</template>
-		</data-table-column>
-				<data-table-column name="Vrijdag">
-			<template>[[item.dag.vrijdag]]</template>
-		</data-table-column>
-	</iron-data-table>
-	<table>
+    </style>
+  <span><iron-icon icon="arrow-back"></iron-icon>Week 19<iron-icon icon="arrow-forward"></iron-icon></span>
+	<iron-ajax 	url="data2.json" on-response="handleResponse" last-response="{{data}}" auto></iron-ajax>
+
+  <iron-data-table items="[[data.maandag.lesgegevens]]" selection-enabled multi-selection>
+    <data-table-column name="{{ma}}">
+      <template>
+      <table>
+      <tr><td colspan="2">[[item.les.vak]]</td></tr>
+      <tr class="tijden"><td>[[item.les.startTijd]]</td><td>[[item.les.eindTijd]]</td></tr>
+      <tr><td>[[item.les.lokaal]]</td><td>[[item.les.klas]]</td></tr>
+      <tr><td colspan="2">[[item.les.emailDocent]]</td></tr>
+      </table>
+      </template>
+    </data-table-column>
+  </iron-data-table>
+  <iron-data-table items="[[data.dinsdag.lesgegevens]]" selection-enabled multi-selection>
+    <data-table-column name="{{di}}">
+      <template>
+      <table>
+      <tr><td colspan="2">[[item.les.vak]]</td></tr>
+      <tr class="tijden"><td>[[item.les.startTijd]]</td><td>[[item.les.eindTijd]]</td></tr>
+      <tr><td>[[item.les.lokaal]]</td><td>[[item.les.klas]]</td></tr>
+      <tr><td colspan="2">[[item.les.emailDocent]]</td></tr>
+      </table>
+      </template>
+    </data-table-column>
+  </iron-data-table>
+  <iron-data-table items="[[data.woensdag.lesgegevens]]" selection-enabled multi-selection>
+    <data-table-column name={{wo}}>
+      <template>
+      <table>
+      <tr><td colspan="2">[[item.les.vak]]</td></tr>
+      <tr class="tijden"><td>[[item.les.startTijd]]</td><td>[[item.les.eindTijd]]</td></tr>
+      <tr><td>[[item.les.lokaal]]</td><td>[[item.les.klas]]</td></tr>
+      <tr><td colspan="2">[[item.les.emailDocent]]</td></tr>
+      </table>
+      </template>
+    </data-table-column>
+  </iron-data-table>
+  <iron-data-table items="[[data.donderdag.lesgegevens]]" selection-enabled multi-selection>
+    <data-table-column name={{do}}>
+      <template>
+      <table>
+      <tr><td colspan="2">[[item.les.vak]]</td></tr>
+      <tr class="tijden"><td>[[item.les.startTijd]]</td><td>[[item.les.eindTijd]]</td></tr>
+      <tr><td>[[item.les.lokaal]]</td><td>[[item.les.klas]]</td></tr>
+      <tr><td colspan="2">[[item.les.emailDocent]]</td></tr>
+      </table>
+      </template>
+    </data-table-column>
+  </iron-data-table>
+    <iron-data-table items="[[data.vrijdag.lesgegevens]]" selection-enabled multi-selection>
+    <data-table-column name={{vr}}>
+      <template>
+      <table>
+      <tr><td colspan="2">[[item.les.vak]]</td></tr>
+      <tr class="tijden"><td>[[item.les.startTijd]]</td><td>[[item.les.eindTijd]]</td></tr>
+      <tr><td>[[item.les.lokaal]]</td><td>[[item.les.klas]]</td></tr>
+      <tr><td colspan="2">[[item.les.emailDocent]]</td></tr>
+      </table>
+      </template>
+    </data-table-column>
+  </iron-data-table>
+  
+ 
+	<table id="opties">
 	<tr>
 	<td><paper-button id="ziekMelden" class="optie" raised>Ziek melden</paper-button></td>
 	<td><paper-button id="afwezigMelden" class="optie" raised>Afwezig melden</paper-button></td></tr>
@@ -60,13 +135,42 @@
         is: 'my-hoofdscherm',
 
         properties: {
+		
           rol: {
             type: String,
             notify: true,
           },
-        },		
-		
-		
+          ma: {
+            type: String,
+            notify: true,
+          },
+          di: {
+            type: String,
+            notify: true,
+          },
+          wo: {
+            type: String,
+            notify: true,
+          },
+          do: {
+            type: String,
+            notify: true,
+          },
+          vr: {
+            type: String,
+            notify: true,
+          },
+        },	
+
+		handleResponse: function(e) {
+          console.log(e.detail.response);
+          this.ma = "Maandag " + e.detail.response.maandag.datum;
+          this.di = "Dinsdag " + e.detail.response.dinsdag.datum;
+          this.wo = "Woensdag " + e.detail.response.woensdag.datum;
+          this.do = "Donderdag " + e.detail.response.donderdag.datum;
+          this.vr = "Vrijdag " + e.detail.response.vrijdag.datum;                                        
+
+        },
       
         _go_home: function() {
           var lApp = document.querySelector('my-app');  //het polymer element <my-app>

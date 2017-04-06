@@ -168,7 +168,6 @@ inspired styles to your `iron-data-table`.
     <div id="container">
       <div id="header">
         <data-table-row header>
-          <data-table-checkbox header hidden$="[[!multiSelection]]" on-tap="_toggleSelectAll" checked="[[_isSelectAllChecked(selectedItems.length, selectedItems.inverted, size)]]" indeterminate="[[_isSelectAllIndeterminate(selectedItems.length, size)]]"></data-table-checkbox>
           <template is="dom-repeat" items="[[columns]]" as="column">
             <data-table-cell header
                              align-right="[[column.alignRight]]"
@@ -179,7 +178,10 @@ inspired styles to your `iron-data-table`.
                              order="[[column.order]]"
                              table="[[_this]]"
                              template="[[column.headerTemplate]]"
-                             width="[[column.width]]">
+                             width="[[column.width]]"
+							 checked="[[_isSelectAllChecked(selectedItems.length, selectedItems.inverted, size)]]"
+							 indeterminate="[[_isSelectAllIndeterminate(selectedItems.length, size)]]"
+							 on-click="_onCellClick2">
               <data-table-column-sort sort-order="[[sortOrder]]" path="[[column.sortBy]]" on-sort-direction-changed="_sortDirectionChanged" hidden$="[[!column.sortBy]]"></data-table-column-sort>
             </data-table-cell>
           </template>
@@ -196,7 +198,6 @@ inspired styles to your `iron-data-table`.
                             item="[[item]]"
                             tabindex="-1"
                             selected="[[_isSelected(item, selectedItems, selectedItems.*)]]">
-              <data-table-checkbox hidden$="[[!multiSelection]]" tabindex="0" checked="[[_isSelected(item, selectedItems, selectedItems.*)]]" on-tap="_onCheckBoxTap"></data-table-checkbox>
               <template is="dom-repeat" items="[[columns]]" as="column" index-as="colIndex">
                 <data-table-cell template="[[column.template]]"
                                  table="[[_this]]"
@@ -1046,6 +1047,29 @@ inspired styles to your `iron-data-table`.
               this._fireEvent('selecting-item', e.model.item, this.selectItem);
             }
           }
+        }
+      },
+	        // we need to listen to click instead of tap because on mobile safari, the
+      // document.activeElement has not been updated (focus has not been shifted)
+      // yet at the point when tap event is being executed.
+      _onCellClick2: function(e) {
+        // Prevent item selection if row itself is not focused. This means that
+        // an element inside the row has been focused.
+        // Mobile devices don't move focus from body unless it's an input element that is focused, so this element will never get focused.
+        if (this._isFocusable(Polymer.dom(e).localTarget)) {
+          return;
+        } else {
+          if (this.rowDetail && this.detailsEnabled) {
+            if (this._isExpanded(e.model.item, this._expandedItems)) {
+              this._fireEvent('collapsing-item', e.model.item, this.collapseItem);
+            } else {
+              this._fireEvent('expanding-item', e.model.item, this.expandItem);
+            }
+          }
+
+          if (this.selectionEnabled) {
+			this._toggleSelectAll();
+		}
         }
       },
 

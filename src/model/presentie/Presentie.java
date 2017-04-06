@@ -58,7 +58,7 @@ public class Presentie {
 		
 		if (obj instanceof Presentie){
 			Presentie anderePresentie = (Presentie) obj;
-			if (anderePresentie.getStudent()){
+			if (anderePresentie.getStudent()==null){
 				return true;
 			}
 		}
