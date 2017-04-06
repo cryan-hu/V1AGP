@@ -1,6 +1,8 @@
 package model.presentie;
 
 import java.time.Calendar;
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 import java.util.Calendar;
 
 public class Afwezigheid {
@@ -32,8 +34,9 @@ public class Afwezigheid {
 	}
 
 	public boolean isActieveZiektemelding() {
-		Calendar date = Calendar..now(); 
-		if (date.isAfter(beginDatum) && date.isBefore(eindDatum)) { // begin<datum<eind
+		DateTimeFormatter dft = DateTimeFormatter.ofPattern("dd/MM/yyyy");
+		LocalDate localDate = LocalDate.now(); 
+		if (localDate.isAfter(beginDatum) && localDate.isBefore(eindDatum)) { // begin<datum<eind
 			return true;
 		} else {
 			return false; // hier moet met huidige datum gekeken worden of dat wel in
