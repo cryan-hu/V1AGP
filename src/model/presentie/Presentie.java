@@ -1,7 +1,9 @@
 package model.presentie;
 
 import model.persoon.Student;
+
 import model.vakGegevens.Les;
+
 
 public class Presentie {
 	private boolean isAanwezig;
@@ -48,5 +50,18 @@ public class Presentie {
 	
 	public void setAanwezig(boolean isAanwezig){
 		this.isAanwezig = isAanwezig;
+	}
+
+	
+	public boolean equals(Object obj){
+		boolean gelijk = false;
+		
+		if (obj instanceof Presentie){
+			Presentie anderePresentie = (Presentie) obj;
+			if (anderePresentie.getStudent()){
+				return true;
+			}
+		}
+		return false;
 	}
 }

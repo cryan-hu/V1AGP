@@ -1,23 +1,29 @@
 package model.presentie;
 
+<<<<<<< HEAD
+=======
+import java.time.Calendar;
 import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
+>>>>>>> 5c286f300d92064bdbeccb9857e56c2861d7a53d
+import java.util.Calendar;
 
 public class Afwezigheid {
-	private LocalDate beginDatum;
-	private LocalDate eindDatum;
+	private Calendar beginDatum;
+	private Calendar eindDatum;
 	private String type;
 
-	public Afwezigheid(String type, LocalDate beginDatum, LocalDate eindDatum) {
+	public Afwezigheid(String type, Calendar beginDatum, Calendar eindDatum) {
 		this.type = type;
 		this.beginDatum = beginDatum;
 		this.eindDatum = eindDatum;
 	}
 
-	public LocalDate getBeginDatum() {
+	public Calendar getBeginDatum() {
 		return beginDatum;
 	}
 
-	public LocalDate getEindDatum() {
+	public Calendar getEindDatum() {
 		return eindDatum;
 	}
 
@@ -31,7 +37,14 @@ public class Afwezigheid {
 	}
 
 	public boolean isActieveZiektemelding() {
-		if (beginDatum.isBefore(eindDatum)) {
+<<<<<<< HEAD
+		Calendar date = Calendar.now(); 
+		if (date.isAfter(beginDatum) && date.isBefore(eindDatum)) { // begin<datum<eind
+=======
+		DateTimeFormatter dft = DateTimeFormatter.ofPattern("dd/MM/yyyy");
+		LocalDate localDate = LocalDate.now(); 
+		if (localDate.isAfter(beginDatum) && localDate.isBefore(eindDatum)) { // begin<datum<eind
+>>>>>>> 5c286f300d92064bdbeccb9857e56c2861d7a53d
 			return true;
 		} else {
 			return false; // hier moet met huidige datum gekeken worden of dat wel in
@@ -48,7 +61,7 @@ public class Afwezigheid {
 			}
 		}
 
-	private void setBeginDatum(LocalDate beginDatum) {
+	private void setBeginDatum(Calendar beginDatum) {
 		this.beginDatum = beginDatum;
 	}
 

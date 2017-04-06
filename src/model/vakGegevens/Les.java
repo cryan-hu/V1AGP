@@ -1,20 +1,22 @@
 package model.vakGegevens;
 
-import java.time.LocalDate;
+
+
+import java.util.Calendar;
 
 import model.klas.Klas;
 import model.persoon.Docent;
 
 public class Les {
 	private String id; 
-	private LocalDate startDate;
-	private LocalDate eindDate;
+	private Calendar startDate;
+	private Calendar eindDate;
 	private String locatie;
 	private Vak hetVak;
 	private Klas deKlas; 
 	private Docent deDocent;
 	
-	public Les(String id,LocalDate startDate, LocalDate eindDate, String locatie, Vak hetVak, Klas deKlas, Docent deDocent){
+	public Les(String id,Calendar startDate, Calendar eindDate, String locatie, Vak hetVak, Klas deKlas, Docent deDocent){
 		this.id = id;
 		this.startDate = startDate;
 		this.eindDate = eindDate; 
@@ -52,19 +54,19 @@ public class Les {
 		this.deKlas = deKlas;
 	}
 	
-	public LocalDate getStartDateTime(){
+	public Calendar getStartDateTime(){
 		return startDate;
 	}
 	
-	public void setStartDateTime(LocalDate startDate){
+	public void setStartDateTime(Calendar startDate){
 		this.startDate = startDate;
 	}
 	
-	public LocalDate getEindDateTime(){
+	public Calendar getEindDateTime(){
 		return eindDate;
 	}
 	
-	public void setEindDateTime(LocalDate eindDate){
+	public void setEindDateTime(Calendar eindDate){
 		this.eindDate = eindDate;
 	}
 	
