@@ -7,15 +7,12 @@ public class Klas {
 
 	private String klasCode;
 	private String naam;
-	private String soort;
-	private int jaar;
-	private ArrayList<Student> deStudenten = new ArrayList<Student>();
+	private ArrayList<Student> deStudenten;
 
-	public Klas(String klasCode, String naam, String soort, int jaar) {
+	public Klas(String klasCode, String naam) {
 		this.klasCode = klasCode;
 		this.naam = naam;
-		this.soort = soort;
-		this.jaar = jaar;
+		deStudenten = new ArrayList<Student>();
 	}
 	
 	public String getKlasCode() {
@@ -33,23 +30,6 @@ public class Klas {
 	public void setNaam(String naam){
 		this.naam = naam;
 	}
-	
-	public String getSoort(){
-		return soort;
-	}
-	
-	public void setSoort(String soort){
-		this.soort = soort;
-	}
-	
-	public int getJaar(){
-		return jaar;
-	}
-	
-	public void setJaar(int jaar){
-		this.jaar = jaar;
-	}
-
 	public ArrayList<Student> getStudenten() {
 		return this.deStudenten;
 	}
@@ -58,41 +38,37 @@ public class Klas {
 		this.deStudenten = deStudenten;
 	}
 	
-	public boolean bevatStudent(Student pStudent) {
-		for (Student lStudent : this.getStudenten()) {
-			if (lStudent==pStudent) {
-				return true;
-			}
+	public boolean bevatStudent(Student student) {
+		if(deStudenten.contains(student)){
+			return true;
+		}else{
+			return false;
 		}
-		return false;
 	}
 	
 	public boolean equals(Object obj){	
 		if (obj instanceof Klas){
 			Klas andereKlas = (Klas) obj;
-			if (this.klasCode.equals(andereKlas.klasCode)&&(this.naam.equals(andereKlas.naam))&&(this.soort.equals(andereKlas.soort))&&(this.jaar == andereKlas.jaar)){
+			if (this.klasCode.equals(andereKlas.klasCode)&&
+					(this.naam.equals(andereKlas.naam))){
 				return true;
 			}
-			}
-		return false;
-		}
-	
-	
-	
+		}return false;
+	}
 	
 	public int aantalStudenten(){
 		return deStudenten.size();
 	}
 
-	public void voegStudentToe(Student pStudent) {
-		if (!this.getStudenten().contains(pStudent)) {
-			this.getStudenten().add(pStudent);
+	public void voegStudentToe(Student student) {
+		if (!deStudenten.contains(student)) {
+			deStudenten.add(student);
 		}
 	}
 	
-	public void verwijderStudent(Student pStudent){
-		if(this.getStudenten().contains(pStudent)){
-			this.getStudenten().remove(pStudent);
+	public void verwijderStudent(Student student){
+		if(deStudenten.contains(student)){
+			deStudenten.remove(student);
 		}
 	}
 

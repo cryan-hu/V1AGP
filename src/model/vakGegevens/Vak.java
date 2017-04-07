@@ -9,11 +9,11 @@ public class Vak {
 		this.naam = naam;
 	}
 	
-	public String getVak(){
+	public String getVakCode(){
 		return vakCode;
 	}
 	
-	public void setVak(String vakCode){
+	public void setVakCode(String vakCode){
 		this.vakCode = vakCode;
 	}
 	
