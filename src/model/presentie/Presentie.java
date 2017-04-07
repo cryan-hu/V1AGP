@@ -19,8 +19,7 @@ public class Presentie {
 	}
 	
 	public boolean isOpnameDoorDocent(){
-		boolean status = false;
-		return status;
+		return opnameDoorDocent;
 	}
 	
 	public void setOpnameDoorDocent(boolean opnameDoorDocent){
@@ -52,16 +51,25 @@ public class Presentie {
 		this.isAanwezig = isAanwezig;
 	}
 
-	
 	public boolean equals(Object obj){
 		boolean gelijk = false;
-		
 		if (obj instanceof Presentie){
 			Presentie anderePresentie = (Presentie) obj;
-			if (anderePresentie.getStudent()==null){
-				return true;
+			if (anderePresentie.getStudent().equals(this.student)&&
+					anderePresentie.getLes().equals(this.les)){
+				return gelijk;
 			}
 		}
-		return false;
+		return gelijk;
 	}
+
+
+	public String getVolledigePresentie(){
+		String s = isAanwezig +""+ student + les + opnameDoorDocent;
+		return s;
+	}
+
+
+
+
 }
