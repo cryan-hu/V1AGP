@@ -9,6 +9,7 @@ import model.presentie.Afwezigheid;
 public class Student extends Persoon {
 
 	private int studentNummer;
+	private String groepId;
 	private ArrayList<Afwezigheid> afwezigheden;
 
 	public Student(
@@ -24,6 +25,7 @@ public class Student extends Persoon {
 			pAchternaam, 
 			pWachtwoord, 
 			pGebruikersnaam);
+		this.setGroepId("");
 		this.setStudentNummer(pStudentNummer);
 		this.afwezigheden = new ArrayList<Afwezigheid>();
 	}
@@ -53,6 +55,15 @@ public class Student extends Persoon {
 	public void voegAfwezigheidToe(Afwezigheid afwezigheid){
 		afwezigheden.add(afwezigheid);
 	}
+	
+	public String getGroepId() {
+    return this.groepId;	
+  }
+ 
+  public void setGroepId(String pGroepId) {
+    this.groepId= pGroepId;	
+  }
+
 	
 	
 	
