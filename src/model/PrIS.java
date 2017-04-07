@@ -422,4 +422,12 @@ public ArrayList<Presentie> getPresentieStudent(String student){
 			
 		}
 	}	
+
+	// private void vulLessen() is hier een vulLessen methode nodig!?
+
+
+
 }
+
+
+
