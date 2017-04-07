@@ -56,6 +56,13 @@ public class PrIS {
 		deDocenten = new ArrayList<Docent>();
 		deStudenten = new ArrayList<Student>();
 		deKlassen = new ArrayList<Klas>();
+		deVakken = new ArrayList<Vak>();
+		deLessen = new ArrayList<Les>();
+		dePresenties = new ArrayList<Presentie>();
+
+		//vulLessen(deLessen); // CODE VOOR vulLessen CHECKEN!!! is het nodig!!??
+		
+		vulVakken(deVakken);
 
 		// Inladen klassen
 		vulKlassen(deKlassen);
@@ -107,9 +114,9 @@ public class PrIS {
 
 	private Vak getVak(String vakCode){
 		for (Vak lVak : deVakken) {
-			if (lVak.equals(vakCode)){
+			if (lVak.getVakCode().equals(vakCode)){
 				return lVak;
-		}
+			}
 		}
 		return null;
 	}
@@ -128,7 +135,21 @@ public class PrIS {
 	}
 	
 	public ArrayList<Vak> getDocentVakken(Docent docent){
-		return null;
+		ArrayList<Vak> docentVakken = new ArrayList<Vak>() ;
+		for(Les l : deLessen){
+			if(l.getDocent().equals(docent)){
+				docentVakken.add(l.getVak());
+			}
+		}return docentVakken;
+	}
+	
+	public ArrayList<Les> getDocentLessen(Docent docent){
+		ArrayList<Les> docentLessen = new ArrayList<Les>();
+		for(Les l : deLessen){
+			if(l.getDocent().equals(docent)){
+				docentLessen.add(l);
+			}
+		}return docentLessen;
 	}
 	
 	public Klas getKlasVanStudent(Student pStudent) {
@@ -141,21 +162,60 @@ public class PrIS {
 		return null;
 	}
 	
-	public Presentie getPresentie(Les les, Student student){
-		return null;
+	public Les getLes(String les){
+		for(Les l : deLessen){
+			if(l.equals(les)){
+				return l;
+			}
+		}return null;
 	}
-
 	
-	public int getPresentieType(Les les, Student student){
-		return (Integer) null;
+	public Presentie getPresentie(Les les, Student student){
+		for(Presentie p : dePresenties){
+			if(p.getStudent().equals(student)&&
+					p.getLes().equals(les)){
+				return p;
+			}
+		}return null;
+	}
+	
+	//public int getPresentieType(Les les, Student student){
+	//	return (Integer) null;
+	//}
+	
+	public ArrayList<Les> getLessen(){
+		return deLessen;
+	}
+	
+	public ArrayList<Les> getLessenVanKlas(String klas){
+		ArrayList<Les> lessenVanKlas	 = new ArrayList<Les>();
+		for (Les l : deLessen){
+			if (l.getKlas().getNaam().equals(klas)){
+				lessenVanKlas.add(l);
+			}
+		}return lessenVanKlas;
 	}
 	
 	public ArrayList<Presentie> getPresentie(){
 		return dePresenties;
 	}
 		
-	public ArrayList<Presentie> getPresentieStudent(String Student){
-		return null;
+	public ArrayList<Presentie> getPresentieDocent(Docent docent){
+		ArrayList<Presentie> presentieDocent = new ArrayList<Presentie>();
+		for (Presentie p : dePresenties){
+			if(p.getLes().getDocent().equals(docent)){
+				presentieDocent.add(p);
+			}
+		}return presentieDocent;
+	}
+	
+public ArrayList<Presentie> getPresentieStudent(String student){
+		ArrayList<Presentie> presentieStudent = new ArrayList<Presentie>();
+		for (Presentie p : dePresenties){
+			if(p.getStudent().equals(student)){
+				presentieStudent.add(p);
+			}
+		}return presentieStudent;
 	}
 	
 	public Student getStudent(String pGebruikersnaam) {
@@ -217,7 +277,18 @@ public class PrIS {
 	}
 	
 	public void nieuwePresentie(boolean isAanwezig, Les les, boolean opnameDoorDocent, Student student){
+		Presentie nieuwePresentie = new Presentie(isAanwezig, student, les, opnameDoorDocent);
+		dePresenties.add(nieuwePresentie);
 		}
+	
+	public void verwijderPresentie(Student student, Les les){
+		for (Presentie p : dePresenties){
+			if (p.getLes().equals(les)&& 
+					p.getStudent().equals(student)){
+				dePresenties.remove(p);
+			}
+		}
+	}
 	
 	private void vulVakken(ArrayList<Vak> pVakken){
 		String csvFile = "././CSV/vakken.csv";
@@ -249,7 +320,6 @@ public class PrIS {
 		}
 	}
 		
-	
 	private void vulDocenten(ArrayList<Docent> pDocenten) {
 		String csvFile = "././CSV/docenten.csv";
 		BufferedReader br = null;
@@ -352,6 +422,4 @@ public class PrIS {
 			
 		}
 	}	
-
-
 }
